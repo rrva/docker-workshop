@@ -8,7 +8,7 @@ Vi provar att starta en ny docker-container som kör ett litet leksaksprogram, s
 
     docker run -it alpine sh -c "while true; do echo hello from inside docker; sleep 1; done" 
 
-Avbryt körningen med <kbd>Ctrl</kbd>+<kbd>C<kbd>
+Avbryt körningen med <kbd>Ctrl</kbd>+<kbd>C</kbd>
 
 Att starta en ny container görs alltså på följande form:
 
@@ -78,3 +78,45 @@ Kör två containrar med nodejs-programmet ovan. Den ena kan svara "goddagens" o
 
 
 
+## Dockerfile och egna images
+
+För att skapa egna images, till exempel för att paketera din egen kod, använder man en fil som kallas `Dockerfile` för att styra hur innehållet i en image byggs ihop. Här vill du alltså ange alla förutsättningar i form av program och bibliotek, med rätt versioner av allt, och kopiera in din egen kod.
+
+Här ett exempel:
+
+    FROM nodejs:6.9.2
+    ADD app.js /
+    CMD node app.js
+    
+Vad säger denna `Dockerfile` ? Jo:
+
+* `FROM` används för att ange en annan image som utgångspunkt. Det håller din egen Dockerfile kortfattad, och alla måste ju börja nånstans, liksom. (`FROM scratch` börjar från ingenting).    
+* `ADD` används för att kopiera in filer (eller `COPY`; skillnaden är subtil, kolla upp den själv).
+* `CMD` anger programmet som standardmässigt ska startas från din image om inget annat angetts till `docker run`.
+
+Skapa en tom katalog, `hello-docker`, i den lägger du en `Dockerfile` från ovan och en källkodsfil för ett nodejs-program, `app.js`.
+
+Exempel på lämplig app.js:
+
+    const http = require('http');
+
+    const hostname = '127.0.0.1';
+    const port = 3000;
+
+    const server = http.createServer((req, res) => {
+      res.end('Tjohoo allesammans\n');
+    });
+
+    server.listen(port, hostname, () => {
+      console.log(`Server running at http://${hostname}:${port}/`);
+    });
+
+
+För att bygga en image från din Dockerfile kan du använda
+
+    docker build -t hellonode .
+
+`-t` används för att tagga (namnge) din image så du kan referera det namnet
+vid `docker run`. Vi valde namnet hellonode.
+
+Bygg och kör din image. Portmappa port 8126 till port 3000 i containern. Kör den i bakgrunden.
