@@ -1,6 +1,6 @@
 # Övning: Grunderna i docker
 
-## Starta, stoppa containers
+## Övning 1: Starta, stoppa containers
 
 En docker-container är _ett körtillfälle_ av ett program, med utgångspunkt från filerna som finns i en docker-image. 
 
@@ -45,7 +45,7 @@ Du kan nu prova att:
    * Stoppa en container snällt med `docker stop CONTAINER` eller bryskt med `docker kill CONTAINER`
    * Starta fler kopior av vårt leksaksprogram, genom att köra `docker run -d` flera gånger.
    
-### Sista övning
+### Slutkläm övning 1
    
 Starta en docker-container från imagen `mbentley/figlet`. Ange kommandot `wohoo`.
 
@@ -55,7 +55,7 @@ Se till att stoppa alla containers du har igång. `docker ps` ska vara tom.
 
 Första övningen klar! Wohoo!
 
-## Servrar och portmappningar
+## Övning 2: Servrar och portmappningar
 
 Vi kan ju roa oss med andra docker-images än `alpine`, till exempel imagen `node:6.9.2`. Skrivformen `IMAGE:TAG` gör att vi väljer att köra en namngiven version av en image, `6.9.2` i det här fallet.
 
@@ -71,14 +71,14 @@ Prova nu att accessa http://127.0.0.1:8123, t.ex. i din browser.
 
 Vi har här använt en viktig feature i docker, portmappningar. En portmappning kopplar ihop ett portnummer på maskinen som kör docker på (även kallad docker host), till ett portnummer i din container. Det behövs eftersom varje docker-container kör med sin egen nätverks-stack, dvs sin egen rymd av portnummer etc och även en egen ip-adress. Via portmappningen kan du komma åt en port utifrån och på så sätt komma åt processer i en docker-container som lyssnar på nätverket. I exemplet ovan kopplade vi port 8123 på din maskin till port 3000 i docker-containern.
 
-### Sista övning
+### Slutkläm övning 2
 
 Kör två containrar med nodejs-programmet ovan. Den ena kan svara "goddagens" och den andra "this is an ex-parrot", eller nåt annat lämpligt. Låt båda lyssna på port 3000 inuti docker men den ena vara tillgänglig på port 8124 och den andra på port 8125. Accessa dem var för sig i din browser. Stoppa dem båda.
 
 
 
 
-## Dockerfile och egna images
+## Övning 3: Dockerfile och egna images
 
 För att skapa egna images, till exempel för att paketera din egen kod, använder man en fil som kallas `Dockerfile` för att styra hur innehållet i en image byggs ihop. Här vill du alltså ange alla förutsättningar i form av program och bibliotek, med rätt versioner av allt, och kopiera in din egen kod.
 
@@ -119,4 +119,11 @@ För att bygga en image från din Dockerfile kan du använda
 `-t` används för att tagga (namnge) din image så du kan referera det namnet
 vid `docker run`. Vi valde namnet hellonode.
 
-Bygg och kör din image. Portmappa port 8126 till port 3000 i containern. Kör den i bakgrunden.
+* Bygg och kör din image
+* Portmappa port 8126 till port 3000 i containern. Kör den i bakgrunden.
+
+### Slutkläm övning 3
+
+Övningen går ut på att köra den populära webbservern nginx i docker och serva statisk html.
+
+Skapa en `Dockerfile` som baserar sig på imagen `nginx:1.11.10`. Skapa en fil `index.html` och fyll den med nån HTML, och se till att den kopieras till katalogen `/usr/share/nginx/html` med hjälp av Dockerfile-kommandot `COPY`. Kör din docker-image och portmappa port 8127 till port 80 i containern. Hämta sidan i valfri http-klient (kanske https://httpie.org/) eller din browser.
