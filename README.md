@@ -100,7 +100,7 @@ Exempel på lämplig app.js:
 
     const http = require('http');
 
-    const hostname = '127.0.0.1';
+    const hostname = '0.0.0.0';
     const port = 3000;
 
     const server = http.createServer((req, res) => {
@@ -137,3 +137,5 @@ till exempel en webbserver och en databas.
 För det kan man använda docker compose.
 
 Gör getting-started övningen på https://docs.docker.com/compose/gettingstarted/
+
+
