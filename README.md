@@ -82,7 +82,7 @@ Kör två containrar med nodejs-programmet ovan. Den ena kan svara "goddagens" o
 
 För att skapa egna images, till exempel för att paketera din egen kod, använder man en fil som kallas `Dockerfile` för att styra hur innehållet i en image byggs ihop. Här vill du alltså ange alla förutsättningar i form av program och bibliotek, med rätt versioner av allt, och kopiera in din egen kod.
 
-Här ett exempel:
+Här ett exempel på en `Dockerfile`:
 
     FROM nodejs:6.9.2
     ADD app.js /
@@ -127,3 +127,13 @@ vid `docker run`. Vi valde namnet hellonode.
 Övningen går ut på att köra den populära webbservern nginx i docker och serva statisk html.
 
 Skapa en `Dockerfile` som baserar sig på imagen `nginx:1.11.10`. Skapa en fil `index.html` och fyll den med nån HTML, och se till att den kopieras till katalogen `/usr/share/nginx/html` med hjälp av Dockerfile-kommandot `COPY`. Kör din docker-image och portmappa port 8127 till port 80 i containern. Hämta sidan i valfri http-klient (kanske https://httpie.org/) eller din browser.
+
+
+## Övning 4: Docker-compose
+
+Ibland vill man kunna komponera ihop ett antal olika appar, till ett helt system
+till exempel en webbserver och en databas.
+
+För det kan man använda docker compose.
+
+Gör getting-started övningen på https://docs.docker.com/compose/gettingstarted/
